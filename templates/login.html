@@ -8,12 +8,15 @@
 <body>
     <div class="form-container">
         <h2>Login to Resume Builder</h2>
-        <form action="/login" method="POST" class="form-box">
+        <form action="/login" method="POST" class="form-box" id="loginForm">
             <input type="email" name="email" placeholder="Email Address" required>
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit">Login</button>
         </form>
         <p class="footer-link">Don't have an account? <a href="/signup">Sign up</a></p>
     </div>
+
+    <!-- Script tag added here -->
+    <script src="{{ url_for('static', filename='login.js') }}"></script>
 </body>
 </html>

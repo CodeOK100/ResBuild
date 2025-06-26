@@ -1,4 +1,4 @@
-from flask import Flask, redirect, request, render_template, send_file, url_for, session, flash
+from flask import Flask, redirect, request, render_template, send_file, url_for, session, flash, jsonify
 from fpdf import FPDF
 from docx import Document
 from flask_sqlalchemy import SQLAlchemy
@@ -54,7 +54,6 @@ def is_valid_email(email):
 def is_strong_password(password):
     return len(password) >= 8 and any(c.isdigit() for c in password) and any(c.isupper() for c in password)
 
-# Authentication routes
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -65,10 +64,16 @@ def login():
         if user and check_password_hash(user.password, password):
             session['user_id'] = user.id
             session['username'] = user.username
-            return redirect(url_for('home'))
+            return jsonify({
+                'success': True,
+                'message': 'Login successful',
+                'redirect_url': '/dashboard'
+            })
         else:
-            flash("Invalid credentials", "error")
-            return render_template('login.html')
+            return jsonify({
+                'success': False,
+                'message': 'Invalid email or password'
+            })
 
     return render_template('login.html')
 
@@ -81,29 +86,24 @@ def signup():
         confirm_password = request.form['confirm_password']
 
         if password != confirm_password:
-            flash("Passwords do not match", "error")
-            return render_template('signup.html')
+            return jsonify({'success': False, 'message': 'Passwords do not match'})
 
         if not is_valid_email(email):
-            flash("Invalid email format", "error")
-            return render_template('signup.html')
+            return jsonify({'success': False, 'message': 'Invalid email format'})
 
         if not is_strong_password(password):
-            flash("Password must be at least 8 characters long and contain an uppercase letter and a number", "error")
-            return render_template('signup.html')
+            return jsonify({'success': False, 'message': 'Password must be at least 8 characters, with a number and uppercase letter'})
 
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
-            flash("Email already registered", "error")
-            return render_template('signup.html')
+            return jsonify({'success': False, 'message': 'Email already registered'})
 
         hashed_password = generate_password_hash(password)
         new_user = User(username=username, email=email, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
 
-        flash("Account created successfully. Please login.", "success")
-        return redirect(url_for('login'))
+        return jsonify({'success': True, 'message': 'Account created successfully. Please login.', 'redirect_url': '/login'})
 
     return render_template('signup.html')
 
