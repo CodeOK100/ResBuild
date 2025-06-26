@@ -1,0 +1,164 @@
+/* General body styling with gradient background */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, rgba(1, 1, 1, 0), rgba(255, 255, 255, 1)), 
+            url('images/background1.jpg') no-repeat center center / cover;
+}
+
+/* Company name styling */
+.company-name {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  font-size: 35px;
+  font-weight: bold;
+  color: #ff0000; /* Color */
+  animation: slide-down-late 2s ease-out 2s forwards; /* Animates after a delay */
+  z-index: 10;
+  opacity: 0; /* Starts as hidden */
+  background-color: rgb(216, 204, 204);
+  padding: 5px 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Container styling */
+.container {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+  box-sizing: border-box;
+  animation: fade-in 2s ease-out; /* Fade-in effect for the container */
+  margin: 50px auto; /* Center the container with scrollable margins */
+}
+
+/* Form title */
+h1 {
+  text-align: center;
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 20px;
+  animation: slide-down 1.5s ease-out; /* Slide-down effect for the title */
+}
+
+
+/* Form title */
+h2 {
+  text-align: center;
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 20px;
+  animation: slide-down 1.5s ease-out; /* Slide-down effect for the title */
+}
+
+/* Form labels */
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+/* Input fields */
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: #fff6f6; /* Subtle red tint */
+  border: 1px solid #070606;
+}
+
+/* Input focus effect */
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #161313;
+  box-shadow: 0 0 5px rgba(19, 14, 14, 0.6);
+}
+
+/* Textarea styling */
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Submit button */
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #2073c0; /* Button color */
+  color: rgb(12, 8, 8);
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #2658c4; /* Darker color for hover */
+  transform: scale(1.2); /* Slight pop effect */
+}
+
+/* Form spacing */
+form > *:last-child {
+  margin-bottom: 0;
+}
+
+/* Animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-down {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-down-late {
+  from {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(-50%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Animation for the form */
+form {
+  animation: slide-in 2s ease-out;
+}

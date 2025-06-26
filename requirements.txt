@@ -1,0 +1,8 @@
+flask
+flask_sqlalchemy
+python-dotenv
+fpdf
+python-docx
+pymysql
+openai
+# Additional libraries for specific functionalities

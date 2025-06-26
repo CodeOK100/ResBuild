@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Choose Download Format</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='format_style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="company-name">Nixzoe</div>
+      <h1>Select Resume Download Format</h1>
+      <form action="/download_resume" method="POST">
+        <!-- Pass user data and selected template -->
+        {% for key, value in user_data.items() %}
+        <input type="hidden" name="{{ key }}" value="{{ value }}" />
+        {% endfor %}
+        <input type="hidden" name="template" value="{{ template_selected }}" />
+
+        <!-- Format options -->
+        <div class="format-options">
+          <div class="format-option">
+            <input type="radio" id="pdf" name="format" value="pdf" required />
+            <label for="pdf">
+              <div class="icon">
+                <img
+                  src="{{ url_for('static', filename='icons/pdf_icon.png') }}"
+                  alt="PDF Icon"
+                />
+              </div>
+              <p>PDF</p>
+            </label>
+          </div>
+          <div class="format-option">
+            <input type="radio" id="docx" name="format" value="docx" />
+            <label for="docx">
+              <div class="icon">
+                <img
+                  src="{{ url_for('static', filename='icons/docx_icon.png') }}"
+                  alt="DOCX Icon"
+                />
+              </div>
+              <p>DOCX</p>
+            </label>
+          </div>
+          <div class="format-option">
+            <input type="radio" id="txt" name="format" value="txt" />
+            <label for="txt">
+              <div class="icon">
+                <img
+                  src="{{ url_for('static', filename='icons/txt_icon.png') }}"
+                  alt="TXT Icon"
+                />
+              </div>
+              <p>TXT</p>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="download-btn">Download Resume</button>
+      </form>
+    </div>
+  </body>
+</html>

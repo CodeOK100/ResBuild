@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Select Resume Template</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='template_style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="company-name">Nixzoe</div>
+      <h1>Select Your Resume Template</h1>
+      <p class="notice">
+        Note: Your resume will be generated using a standardized template. These
+        selections only help in providing inspiration or a preview of possible
+        designs.
+      </p>
+      <form action="/generate_resume" method="POST">
+        <!-- Pass user data along -->
+        {% for key, value in user_data.items() %}
+        <input type="hidden" name="{{ key }}" value="{{ value }}" />
+        {% endfor %}
+
+        <!-- Dynamically display template previews -->
+        <div class="template-selection">
+          {% for template in template_files %}
+          <div class="template-option">
+            <input
+              type="radio"
+              id="{{ template.file }}"
+              name="template"
+              value="{{ template.file }}"
+              required
+            />
+            <label for="{{ template.file }}">
+              <img
+                src="{{ url_for('static', filename=template.preview.split('static/')[-1]) }}"
+                alt="Preview of {{ template.file }}"
+                class="template-preview"
+              />
+              <p>{{ template.file.replace('_', ' ').replace('.docx', '') }}</p>
+            </label>
+          </div>
+          {% endfor %}
+        </div>
+
+        <button type="submit">Proceed</button>
+      </form>
+    </div>
+  </body>
+</html>
