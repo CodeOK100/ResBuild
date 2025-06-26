@@ -85,25 +85,33 @@ def signup():
         password = request.form['password']
         confirm_password = request.form['confirm_password']
 
+        errors = {}
+
         if password != confirm_password:
-            return jsonify({'success': False, 'message': 'Passwords do not match'})
+            errors['confirm_password'] = 'Passwords do not match'
 
         if not is_valid_email(email):
-            return jsonify({'success': False, 'message': 'Invalid email format'})
+            errors['email'] = 'Invalid email format'
 
         if not is_strong_password(password):
-            return jsonify({'success': False, 'message': 'Password must be at least 8 characters, with a number and uppercase letter'})
+            errors['password'] = 'Password must be at least 8 characters, with a number and uppercase letter'
 
-        existing_user = User.query.filter_by(email=email).first()
-        if existing_user:
-            return jsonify({'success': False, 'message': 'Email already registered'})
+        if User.query.filter_by(email=email).first():
+            errors['email'] = 'Email already exists'
+
+        if errors:
+            return jsonify({'success': False, 'message': 'Signup failed', 'errors': errors})
 
         hashed_password = generate_password_hash(password)
         new_user = User(username=username, email=email, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
 
-        return jsonify({'success': True, 'message': 'Account created successfully. Please login.', 'redirect_url': '/login'})
+        return jsonify({
+            'success': True,
+            'message': 'Account created successfully',
+            'redirect_url': '/login'
+        })
 
     return render_template('signup.html')
 
